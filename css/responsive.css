@@ -1,0 +1,281 @@
+/* ===========================================
+   Responsive Styles
+   =========================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    :root {
+        --timer-size: 250px;
+    }
+
+    .stats-charts {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card {
+        min-width: auto;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    :root {
+        --nav-height: 56px;
+        --timer-size: 220px;
+    }
+
+    /* Navigation */
+    .nav-bar {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        padding: 0;
+        border-bottom: none;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .nav-brand {
+        display: none;
+    }
+
+    .nav-links {
+        flex: 1;
+        justify-content: space-around;
+        padding: var(--space-2) 0;
+    }
+
+    .nav-link {
+        padding: var(--space-2);
+    }
+
+    .nav-link span {
+        font-size: 10px;
+    }
+
+    .nav-user {
+        display: none;
+    }
+
+    /* Main Content */
+    .main-content {
+        padding-top: 0;
+        padding-bottom: var(--nav-height);
+    }
+
+    /* Timer */
+    .timer-container {
+        padding: var(--space-4);
+        gap: var(--space-4);
+    }
+
+    .timer-time {
+        font-size: var(--font-size-4xl);
+    }
+
+    .timer-btn.primary {
+        width: 70px;
+        height: 70px;
+    }
+
+    .timer-btn.secondary {
+        width: 44px;
+        height: 44px;
+    }
+
+    .current-task {
+        width: 100%;
+    }
+
+    .quick-task-add {
+        max-width: none;
+    }
+
+    /* Tasks */
+    .tasks-container {
+        padding: var(--space-4);
+    }
+
+    .tasks-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .tasks-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .add-task-form {
+        flex-direction: column;
+    }
+
+    .task-input {
+        min-width: auto;
+    }
+
+    .add-task-form> :not(.task-input) {
+        display: flex;
+        gap: var(--space-2);
+    }
+
+    .task-priority,
+    .task-pomodoros {
+        flex: 1;
+    }
+
+    .add-task-btn {
+        width: 100%;
+    }
+
+    .task-item {
+        flex-wrap: wrap;
+    }
+
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: var(--space-2);
+        padding-top: var(--space-2);
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Stats */
+    .stats-container {
+        padding: var(--space-4);
+    }
+
+    .stats-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-2);
+        padding: var(--space-4);
+    }
+
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Settings */
+    .settings-container {
+        padding: var(--space-4);
+    }
+
+    .settings-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+    }
+
+    .setting-control {
+        width: 100%;
+    }
+
+    .setting-control input[type="range"] {
+        flex: 1;
+    }
+
+    .setting-control select {
+        width: 100%;
+    }
+
+    /* Modal */
+    .modal {
+        width: 95%;
+        padding: var(--space-6);
+    }
+
+    /* Toast */
+    .toast-container {
+        left: var(--space-4);
+        right: var(--space-4);
+        top: var(--space-4);
+    }
+
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+    :root {
+        --timer-size: 200px;
+    }
+
+    .timer-time {
+        font-size: var(--font-size-3xl);
+    }
+
+    .mode-btn {
+        padding: var(--space-2) var(--space-3);
+        font-size: 12px;
+    }
+
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    .timer-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: var(--space-4);
+    }
+
+    .timer-display {
+        --timer-size: 150px;
+    }
+
+    .timer-controls {
+        position: absolute;
+        right: var(--space-8);
+        flex-direction: column;
+    }
+}
+
+/* Preference: Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print */
+@media print {
+
+    .nav-bar,
+    .timer-controls,
+    .add-task-form,
+    .task-actions,
+    .modal-overlay {
+        display: none !important;
+    }
+
+    .main-content {
+        padding: 0;
+    }
+
+    .view {
+        display: block !important;
+    }
+}

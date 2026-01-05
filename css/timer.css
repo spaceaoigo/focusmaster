@@ -1,0 +1,346 @@
+/* ===========================================
+   Timer Styles - Simple & Clean Design
+   =========================================== */
+
+.timer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    gap: var(--space-8);
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Mode Selector */
+.mode-selector {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-2);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-full);
+    z-index: 10;
+}
+
+.mode-btn {
+    padding: var(--space-2) var(--space-6);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-secondary);
+    transition: var(--transition-base);
+    background: transparent;
+    border: 2px solid transparent;
+}
+
+.mode-btn:hover {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mode-btn.active {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+    font-weight: var(--font-bold);
+}
+
+.mode-btn[data-mode="work"].active {
+    color: var(--timer-color-work);
+    border-color: var(--timer-color-work);
+}
+
+.mode-btn[data-mode="shortBreak"].active {
+    color: var(--timer-color-break);
+    border-color: var(--timer-color-break);
+}
+
+.mode-btn[data-mode="longBreak"].active {
+    color: var(--timer-color-long-break);
+    border-color: var(--timer-color-long-break);
+}
+
+/* Timer Display */
+.timer-display {
+    position: relative;
+    width: var(--timer-size);
+    height: var(--timer-size);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: var(--space-4) 0;
+}
+
+.timer-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-ring-bg {
+    fill: none;
+    stroke: var(--bg-tertiary);
+    stroke-width: var(--timer-ring-width);
+    opacity: 0.3;
+}
+
+.timer-ring-progress {
+    fill: none;
+    stroke: var(--timer-color-work);
+    stroke-width: var(--timer-ring-width);
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.timer-ring-progress.break {
+    stroke: var(--timer-color-break);
+}
+
+.timer-ring-progress.long-break {
+    stroke: var(--timer-color-long-break);
+}
+
+.timer-time {
+    font-size: 5rem;
+    font-weight: var(--font-bold);
+    letter-spacing: -2px;
+    font-variant-numeric: tabular-nums;
+    z-index: 2;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.timer-session {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    margin-top: var(--space-2);
+    font-weight: var(--font-medium);
+}
+
+/* Current Task */
+.current-task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-8);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    min-width: 240px;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+}
+
+.current-task-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: var(--font-bold);
+}
+
+.current-task-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    text-align: center;
+}
+
+/* Timer Controls */
+.timer-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+    z-index: 10;
+}
+
+.timer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    transition: all 0.2s ease;
+    cursor: pointer !important;
+    /* Ensure clickable */
+    opacity: 1 !important;
+    /* Force visible */
+}
+
+.timer-btn:active {
+    transform: scale(0.95);
+}
+
+.timer-btn.main-btn {
+    width: 80px;
+    height: 80px;
+    background: var(--timer-color-work);
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body.break-mode .timer-btn.main-btn {
+    background: var(--timer-color-break);
+}
+
+body.long-break-mode .timer-btn.main-btn {
+    background: var(--timer-color-long-break);
+}
+
+.timer-btn.main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.timer-btn.secondary-btn {
+    width: 50px;
+    height: 50px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.timer-btn.secondary-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+/* Floating Controls */
+.floating-controls {
+    position: absolute;
+    bottom: var(--space-8);
+    right: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    z-index: 100;
+}
+
+.control-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    cursor: pointer;
+}
+
+.control-btn:hover {
+    transform: scale(1.05);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.control-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* Extra Controls (BGM, Fullscreen) */
+.timer-extra-controls {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+}
+
+.extra-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    background: transparent;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    transition: var(--transition-base);
+    opacity: 0.7;
+}
+
+.extra-btn svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 2px;
+}
+
+.extra-btn:hover {
+    color: var(--text-primary);
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.extra-btn.active {
+    color: var(--color-primary);
+    font-weight: var(--font-bold);
+    opacity: 1;
+}
+
+/* Daily Goal Bar */
+.daily-goal-container {
+    width: 100%;
+    max-width: 400px;
+    margin-top: var(--space-4);
+    background: var(--bg-secondary);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.daily-goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.daily-goal-bar {
+    height: 8px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+}
+
+.daily-goal-progress {
+    height: 100%;
+    background: var(--timer-color-work);
+    border-radius: var(--radius-full);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .timer-container {
+        padding: var(--space-4);
+    }
+
+    .timer-time {
+        font-size: 4rem;
+    }
+
+    :root {
+        --timer-size: 240px;
+    }
+}

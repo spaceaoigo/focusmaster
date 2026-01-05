@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pomodoroタイマー付き作業管理ツール - 集中力を高め、生産性を向上させましょう">
+    <meta name="theme-color" content="#000000">
+    <title>Focus Flow - Pomodoroタイマー</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/stats.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <!-- App Container -->
+    <div id="app" class="app-container">
+        <!-- Navigation -->
+        <nav class="nav-bar" id="navbar">
+            <div class="nav-brand">
+                <span class="brand-icon">🍅</span>
+                <span class="brand-text">Focus Flow</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-link active" data-view="timer">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                    <span>タイマー</span>
+                </button>
+                <button class="nav-link" data-view="tasks">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M9 11l3 3L22 4" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" fill="none"
+                            stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <span>タスク</span>
+                </button>
+                <button class="nav-link" data-view="stats">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M18 20V10M12 20V4M6 20v-6" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                    <span>統計</span>
+                </button>
+                <button class="nav-link" data-view="settings">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path
+                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"
+                            fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    <span>設定</span>
+                </button>
+            </div>
+            <div class="nav-user" id="navUser">
+                <button class="user-avatar" id="userAvatarBtn">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                        <path d="M20 21a8 8 0 10-16 0" fill="none" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Timer View -->
+            <section class="view active" id="timerView">
+                <div class="timer-container">
+                    <!-- Mode Selector -->
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="work">作業</button>
+                        <button class="mode-btn" data-mode="shortBreak">小休憩</button>
+                        <button class="mode-btn" data-mode="longBreak">大休憩</button>
+                    </div>
+
+                    <!-- Timer Display -->
+                    <div class="timer-display">
+                        <svg class="timer-ring" viewBox="0 0 200 200">
+                            <circle class="timer-ring-bg" cx="100" cy="100" r="90" />
+                            <circle class="timer-ring-progress" cx="100" cy="100" r="90" id="timerProgress" />
+                        </svg>
+                        <div class="timer-time" id="timerTime">25:00</div>
+                        <div class="timer-session" id="timerSession">セッション 1/4</div>
+                    </div>
+
+                    <!-- Current Task -->
+                    <div class="current-task" id="currentTask">
+                        <span class="current-task-label">現在のタスク</span>
+                        <span class="current-task-name" id="currentTaskName">タスクを選択してください</span>
+                    </div>
+
+                    <!-- Timer Controls -->
+                    <div class="timer-controls">
+                        <button class="timer-btn secondary" id="resetBtn" title="リセット">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 3v5h5" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                        <button class="timer-btn primary" id="startBtn" title="開始/一時停止">
+                            <svg viewBox="0 0 24 24" id="playIcon">
+                                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" id="pauseIcon" style="display:none">
+                                <rect x="6" y="4" width="4" height="16" fill="currentColor" />
+                                <rect x="14" y="4" width="4" height="16" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <button class="timer-btn secondary" id="skipBtn" title="スキップ">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 4 15 12 5 20 5 4" fill="none" stroke="currentColor"
+                                    stroke-width="2" />
+                                <line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Extra Controls -->
+                    <div class="timer-extra-controls">
+                        <button class="extra-btn" id="bgmToggle" title="BGM切り替え">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="2" />
+                                <circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" stroke-width="2" />
+                                <circle cx="18" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="2" />
+                            </svg>
+                            <span>BGM</span>
+                        </button>
+                        <button class="extra-btn" id="fullscreenBtn" title="フルスクリーン">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span>全画面</span>
+                        </button>
+                    </div>
+
+                    <!-- Daily Goal Progress -->
+                    <div class="daily-goal" id="dailyGoal">
+                        <div class="goal-header">
+                            <span class="goal-label">今日の目標</span>
+                            <span class="goal-progress" id="goalProgress">0/8 🍅</span>
+                        </div>
+                        <div class="goal-bar">
+                            <div class="goal-bar-fill" id="goalBarFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Task Add -->
+                    <div class="quick-task-add">
+                        <input type="text" class="quick-task-input" id="quickTaskInput" placeholder="新しいタスクを追加...">
+                        <button class="quick-task-btn" id="quickTaskBtn">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tasks View -->
+            <section class="view" id="tasksView">
+                <div class="tasks-container">
+                    <header class="tasks-header">
+                        <h1>タスク</h1>
+                        <div class="tasks-filter">
+                            <button class="filter-btn active" data-filter="all">すべて</button>
+                            <button class="filter-btn" data-filter="active">未完了</button>
+                            <button class="filter-btn" data-filter="completed">完了</button>
+                        </div>
+                    </header>
+
+                    <!-- Add Task Form -->
+                    <form class="add-task-form" id="addTaskForm">
+                        <input type="text" class="task-input" id="taskInput" placeholder="新しいタスクを入力..." required>
+                        <select class="task-priority" id="taskPriority">
+                            <option value="low">低</option>
+                            <option value="medium" selected>中</option>
+                            <option value="high">高</option>
+                        </select>
+                        <input type="number" class="task-pomodoros" id="taskPomodoros" placeholder="🍅" min="1" max="10"
+                            value="1">
+                        <button type="submit" class="add-task-btn">追加</button>
+                    </form>
+
+                    <!-- Tasks List -->
+                    <div class="tasks-list" id="tasksList">
+                        <!-- Tasks will be dynamically inserted here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="tasks-empty" id="tasksEmpty">
+                        <div class="empty-icon">📝</div>
+                        <h3>タスクがありません</h3>
+                        <p>上のフォームから新しいタスクを追加してください</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats View -->
+            <section class="view" id="statsView">
+                <div class="stats-container">
+                    <header class="stats-header">
+                        <h1>統計</h1>
+                        <div class="stats-period">
+                            <button class="period-btn active" data-period="today">今日</button>
+                            <button class="period-btn" data-period="week">週間</button>
+                            <button class="period-btn" data-period="month">月間</button>
+                        </div>
+                    </header>
+
+                    <!-- Today's Summary -->
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon">🍅</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statPomodoros">0</span>
+                                <span class="stat-label">完了Pomodoro</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTime">0分</span>
+                                <span class="stat-label">総作業時間</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statTasks">0</span>
+                                <span class="stat-label">完了タスク</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="statStreak">0日</span>
+                                <span class="stat-label">連続記録</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="productivityScore">0</span>
+                                <span class="stat-label">生産性スコア</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap (Month view) -->
+                    <div class="heatmap-card">
+                        <h3>📅 活動ヒートマップ</h3>
+                        <div id="heatmapContainer">
+                            <!-- Heatmap will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="stats-charts">
+                        <div class="chart-card">
+                            <h3>Pomodoro推移</h3>
+                            <canvas id="pomodoroChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>時間帯別作業量</h3>
+                            <canvas id="hourlyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="achievements-section">
+                        <h3>🏆 実績</h3>
+                        <div class="achievements-grid" id="achievementsGrid">
+                            <!-- Achievements will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="activity-section">
+                        <h3>最近の活動</h3>
+                        <div class="activity-list" id="activityList">
+                            <!-- Activity will be dynamically inserted -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section class="view" id="settingsView">
+                <div class="settings-container">
+                    <header class="settings-header">
+                        <h1>設定</h1>
+                    </header>
+
+                    <!-- Timer Settings -->
+                    <div class="settings-section">
+                        <h2>タイマー設定</h2>
+                        <div class="setting-item">
+                            <label>作業時間</label>
+                            <div class="setting-control">
+                                <input type="range" min="1" max="60" value="25" id="workDuration">
+                                <span class="setting-value" id="workDurationValue">25分</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>小休憩時間</label>
+                            <div class="setting-control">
+                                <input type="range" min="1" max="30" value="5" id="shortBreakDuration">
+                                <span class="setting-value" id="shortBreakDurationValue">5分</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>大休憩時間</label>
+                            <div class="setting-control">
+                                <input type="range" min="1" max="60" value="15" id="longBreakDuration">
+                                <span class="setting-value" id="longBreakDurationValue">15分</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>大休憩までのセッション数</label>
+                            <div class="setting-control">
+                                <input type="range" min="2" max="8" value="4" id="sessionsUntilLongBreak">
+                                <span class="setting-value" id="sessionsUntilLongBreakValue">4回</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-section">
+                        <h2>通知設定</h2>
+                        <div class="setting-item">
+                            <label>ブラウザ通知</label>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" id="browserNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>サウンド通知</label>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" id="soundNotification" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sound Settings -->
+                    <div class="settings-section">
+                        <h2>🎵 サウンド設定</h2>
+                        <div class="setting-item">
+                            <label>マスター音量</label>
+                            <div class="setting-control">
+                                <input type="range" min="0" max="100" value="70" id="masterVolume">
+                                <span class="setting-value" id="masterVolumeValue">70%</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>BGM音量</label>
+                            <div class="setting-control">
+                                <input type="range" min="0" max="100" value="30" id="bgmVolume">
+                                <span class="setting-value" id="bgmVolumeValue">30%</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>効果音音量</label>
+                            <div class="setting-control">
+                                <input type="range" min="0" max="100" value="50" id="sfxVolume">
+                                <span class="setting-value" id="sfxVolumeValue">50%</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>作業用BGM</label>
+                            <div class="setting-control">
+                                <select id="bgmTypeSelect">
+                                    <optgroup label="🎵 音楽">
+                                        <option value="lofi">Lo-Fi Beats（おすすめ）</option>
+                                        <option value="jazz">ジャズピアノ</option>
+                                        <option value="piano">クラシックピアノ</option>
+                                        <option value="ambient">アンビエント</option>
+                                    </optgroup>
+                                    <optgroup label="🌿 環境音">
+                                        <option value="rain">雨の音</option>
+                                        <option value="cafe">カフェ</option>
+                                        <option value="fireplace">焚き火</option>
+                                        <option value="ocean">波の音</option>
+                                        <option value="nature">自然音</option>
+                                        <option value="whitenoise">ホワイトノイズ</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>カウントダウン音</label>
+                            <div class="setting-control">
+                                <label class="toggle">
+                                    <input type="checkbox" id="countdownSound" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appearance Settings -->
+                    <div class="settings-section">
+                        <h2>外観</h2>
+                        <div class="setting-item">
+                            <label>テーマ</label>
+                            <div class="setting-control">
+                                <select id="themeSelect">
+                                    <option value="system">システム設定に従う</option>
+                                    <option value="light">ライト</option>
+                                    <option value="dark">ダーク</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Settings -->
+                    <div class="settings-section">
+                        <h2>データ</h2>
+                        <div class="setting-item">
+                            <label>データのエクスポート</label>
+                            <div class="setting-control">
+                                <button class="btn-secondary" id="exportDataBtn">エクスポート</button>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <label>データのインポート</label>
+                            <div class="setting-control">
+                                <input type="file" id="importDataInput" accept=".json" style="display:none">
+                                <button class="btn-secondary" id="importDataBtn">インポート</button>
+                            </div>
+                        </div>
+                        <div class="setting-item danger">
+                            <label>すべてのデータを削除</label>
+                            <div class="setting-control">
+                                <button class="btn-danger" id="clearDataBtn">削除</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Section -->
+                    <div class="settings-section" id="accountSection">
+                        <h2>アカウント</h2>
+                        <div id="loggedOutState">
+                            <p class="settings-info">アカウントを作成すると、データをクラウドに保存できます。</p>
+                            <div class="auth-buttons">
+                                <button class="btn-primary" id="showLoginBtn">ログイン</button>
+                                <button class="btn-secondary" id="showRegisterBtn">新規登録</button>
+                            </div>
+                        </div>
+                        <div id="loggedInState" style="display:none">
+                            <div class="user-profile">
+                                <div class="user-avatar-large" id="userAvatarLarge">U</div>
+                                <div class="user-info">
+                                    <span class="user-name" id="userName">ユーザー名</span>
+                                    <span class="user-email" id="userEmail">email@example.com</span>
+                                </div>
+                            </div>
+                            <button class="btn-secondary full-width" id="logoutBtn">ログアウト</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Auth Modal -->
+        <div class="modal-overlay" id="authModal">
+            <div class="modal">
+                <button class="modal-close" id="closeAuthModal">&times;</button>
+
+                <!-- Login Form - Google Only -->
+                <div class="auth-form" id="loginForm">
+                    <h2>ログイン</h2>
+                    <p class="auth-description">Googleアカウントでログインしてください</p>
+
+                    <button type="button" class="btn-google" id="googleLoginBtn">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                            <path fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                            <path fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                            <path fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                        </svg>
+                        <span>Googleでログイン</span>
+                    </button>
+
+                    <p class="auth-note">🔒 安全なGoogle認証を使用しています</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

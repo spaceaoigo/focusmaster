@@ -1,0 +1,195 @@
+/* ===========================================
+   CSS Variables - Apple-like Design System
+   =========================================== */
+
+:root {
+    /* Colors - Light Mode */
+    --color-primary: #007AFF;
+    --color-primary-hover: #0056CC;
+    --color-secondary: #5856D6;
+    --color-success: #34C759;
+    --color-warning: #FF9500;
+    --color-danger: #FF3B30;
+
+    /* Background Colors */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F2F2F7;
+    --bg-tertiary: #E5E5EA;
+    --bg-card: rgba(255, 255, 255, 0.8);
+
+    /* Text Colors */
+    --text-primary: #1D1D1F;
+    --text-secondary: #86868B;
+    --text-tertiary: #AEAEB2;
+    --text-inverse: #FFFFFF;
+
+    /* Border Colors */
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-color-strong: rgba(0, 0, 0, 0.2);
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-blur: 20px;
+    --glass-border: rgba(255, 255, 255, 0.5);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    --font-size-5xl: 3.5rem;
+
+    /* Font Weights */
+    --font-light: 300;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-2xl: 28px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-smooth: 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Z-index */
+    --z-dropdown: 100;
+    --z-modal: 200;
+    --z-toast: 300;
+
+    /* Layout */
+    --nav-height: 64px;
+    --sidebar-width: 240px;
+    --max-content-width: 1200px;
+
+    /* Timer specific */
+    --timer-size: 280px;
+    --timer-ring-width: 8px;
+    --timer-color-work: #FF6B6B;
+    --timer-color-break: #4ECDC4;
+    --timer-color-long-break: #45B7D1;
+
+    /* Modern Gradients & Glows - Light Mode */
+    --gradient-primary: linear-gradient(135deg, #007AFF, #00C6FF);
+    --gradient-work: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    --gradient-break: linear-gradient(135deg, #4ECDC4, #556270);
+    --gradient-long-break: linear-gradient(135deg, #45B7D1, #2C3E50);
+
+    --glow-primary: 0 0 20px rgba(0, 122, 255, 0.3);
+    --glow-work: 0 0 30px rgba(255, 107, 107, 0.4);
+    --glow-break: 0 0 30px rgba(78, 205, 196, 0.4);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --color-primary: #0A84FF;
+    --color-primary-hover: #409CFF;
+    --color-secondary: #5E5CE6;
+    --color-success: #30D158;
+    --color-warning: #FF9F0A;
+    --color-danger: #FF453A;
+
+    --bg-primary: #000000;
+    --bg-secondary: #1C1C1E;
+    --bg-tertiary: #2C2C2E;
+    --bg-card: rgba(28, 28, 30, 0.6);
+
+    --text-primary: #FFFFFF;
+    --text-secondary: #8E8E93;
+    --text-tertiary: #636366;
+    --text-inverse: #000000;
+
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-color-strong: rgba(255, 255, 255, 0.2);
+
+    --glass-bg: rgba(28, 28, 30, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+    /* Modern Gradients & Glows - Dark Mode */
+    --gradient-primary: linear-gradient(135deg, #0A84FF, #5E5CE6);
+    --gradient-work: linear-gradient(135deg, #FF453A, #FF9F0A);
+    --gradient-break: linear-gradient(135deg, #30D158, #63E6BE);
+    --gradient-long-break: linear-gradient(135deg, #64D2FF, #0A84FF);
+
+    --glow-primary: 0 0 25px rgba(10, 132, 255, 0.4);
+    --glow-work: 0 0 35px rgba(255, 69, 58, 0.4);
+    --glow-break: 0 0 35px rgba(48, 209, 88, 0.4);
+}
+
+/* System preference based theme */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --color-primary: #0A84FF;
+        --color-primary-hover: #409CFF;
+        --color-secondary: #5E5CE6;
+        --color-success: #30D158;
+        --color-warning: #FF9F0A;
+        --color-danger: #FF453A;
+
+        --bg-primary: #000000;
+        --bg-secondary: #1C1C1E;
+        --bg-tertiary: #2C2C2E;
+        --bg-card: rgba(28, 28, 30, 0.6);
+
+        --text-primary: #FFFFFF;
+        --text-secondary: #8E8E93;
+        --text-tertiary: #636366;
+        --text-inverse: #000000;
+
+        --border-color: rgba(255, 255, 255, 0.1);
+        --border-color-strong: rgba(255, 255, 255, 0.2);
+
+        --glass-bg: rgba(28, 28, 30, 0.72);
+        --glass-border: rgba(255, 255, 255, 0.1);
+
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+        --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+        --gradient-primary: linear-gradient(135deg, #0A84FF, #5E5CE6);
+        --gradient-work: linear-gradient(135deg, #FF453A, #FF9F0A);
+        --gradient-break: linear-gradient(135deg, #30D158, #63E6BE);
+        --gradient-long-break: linear-gradient(135deg, #64D2FF, #0A84FF);
+
+        --glow-primary: 0 0 25px rgba(10, 132, 255, 0.4);
+        --glow-work: 0 0 35px rgba(255, 69, 58, 0.4);
+        --glow-break: 0 0 35px rgba(48, 209, 88, 0.4);
+    }
+}
